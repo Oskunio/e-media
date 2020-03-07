@@ -33,5 +33,25 @@ print(img)
 #         # extract integer value
 #         print int(line.split('=')[1])  # 2240
 
+#pixel checking
+pix = img[0][0]
+print("pixel:")
+print(pix)
+#dimensions of picture
+shape = img.shape
+print("shape:(x,y,color format table size):")
+print(shape)
+#size
+size = img.size
+print("size:")
+print(size)
+print()
 cv2.waitKey()
 cv2.destroyAllWindows()
+
+#print raw data
+file = open('square.png', encoding='ANSI')
+f1 = file.readlines()
+for line in f1:
+    print(line.rstrip())
+file.close()
