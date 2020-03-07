@@ -1,5 +1,7 @@
+import binascii
 import cv2
 import numpy as np
+
 
 filename = "square.png"
 img = cv2.imread(filename)
@@ -21,8 +23,10 @@ dim = (width, height)
 resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
 
 # Show image
-cv2.imshow(window, resized)
-print(img)
+#cv2.imshow(window, resized)
+#print(img)
+#cv2.waitKey()
+#cv2.destroyAllWindows()
 
 # for line in open(filename, "rb"):
 #     if 'END' in line:
@@ -37,21 +41,33 @@ print(img)
 pix = img[0][0]
 print("pixel:")
 print(pix)
+
 #dimensions of picture
 shape = img.shape
 print("shape:(x,y,color format table size):")
 print(shape)
+
 #size
 size = img.size
 print("size:")
 print(size)
 print()
-cv2.waitKey()
-cv2.destroyAllWindows()
 
-#print raw data
+
+#print file in ANSI
 file = open('square.png', encoding='ANSI')
 f1 = file.readlines()
 for line in f1:
     print(line.rstrip())
 file.close()
+print()
+
+#print in hex
+with open(filename, 'rb') as f:
+    hexdata = f.read().hex()
+print("hexdata length:",len(hexdata))
+print(hexdata)
+hexlist = map(''.join, zip(*[iter(hexdata)]*2)) #do a list of 2 char elements
+
+#zrobic funkcje przeszukującą hexdata, ktora znajdzie Ancillary chunks name, a pozniej cofnie o 4 bajty i odczyta wielkosc chunka
+#nastepnie znajac wielkosc chunka zapisze plik bez niego
