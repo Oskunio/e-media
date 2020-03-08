@@ -98,14 +98,17 @@ def IHDRinterpetation(filename):
         heightDec = int(height, 16)
         print("height:", heightDec)
 
+        # Bit depth is a single-byte integer giving the number of bits per sample or per palette index (not per pixel)
         bitDepth=hexFile[(posInText + 24):(posInText + 26)]
         bitDepthDec = int(bitDepth, 16)
         print("bit depth:", bitDepthDec)
 
+        # color type-img type: 0-grayscale, 2-truecolor, 3-indexed-colour, 4-grayscale with alpha, 6-truecolor with aplha
         color = hexFile[(posInText + 26):(posInText + 28)]
         colorDec = int(color, 16)
         print("color type:", colorDec)
 
+        # PNG compression method 0 is deflate/inflate compression
         compression = hexFile[(posInText + 28):(posInText + 30)]
         compressionDec = int(compression, 16)
         print("compression method:", compressionDec)
@@ -114,6 +117,7 @@ def IHDRinterpetation(filename):
         filterDec = int(bitDepth, 16)
         print("filter method:", filterDec)
 
+        # 0-the null method, Interlace method 1, known as Adam7
         inter = hexFile[(posInText + 32):(posInText + 34)]
         interDec = int(inter, 16)
         print("interlace method:", interDec)
