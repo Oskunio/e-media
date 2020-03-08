@@ -2,6 +2,7 @@ import binascii
 import cv2
 import numpy as np
 import functions
+import base64
 
 filename = "square.png"
 img = cv2.imread(filename)
@@ -61,8 +62,8 @@ f2 = file.read()
 print(f2)
 result1 = functions.findChunk2(f2)
 print("Wynik findChunk2:",result1)
-result = functions.findChunk(filename)
-print("Wynik:",result)
+#result = functions.findChunk(filename)
+#print("Wynik:",result)
 
 print()
 
@@ -74,5 +75,15 @@ print("hexdata length:",len(hexdata))
 print(hexdata)
 hexlist = map(''.join, zip(*[iter(hexdata)]*2)) #do a list of 2 char elements, moze sie przydac
 
+newFile = functions.findChunk(filename)
+
+
+
+data = bytes.fromhex(hexdata)
+
+with open('image.png', 'wb') as file:
+    file.write(data)
+
 file.close()
+
 
