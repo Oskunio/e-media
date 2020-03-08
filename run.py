@@ -60,8 +60,8 @@ file = open(filename, encoding='ANSI')
 
 f2 = file.read()
 print(f2)
-result1 = functions.findChunk2(f2)
-print("Wynik findChunk2:",result1)
+#result1 = functions.findChunk2(f2)
+#print("Wynik findChunk2:",result1)
 #result = functions.findChunk(filename)
 #print("Wynik:",result)
 
@@ -76,14 +76,17 @@ print(hexdata)
 hexlist = map(''.join, zip(*[iter(hexdata)]*2)) #do a list of 2 char elements, moze sie przydac
 
 newFile = functions.findChunk(filename)
+print("zwrocilo !!!!!!!!!!!")
 
 
 
 data = bytes.fromhex(hexdata)
 
-with open('image.png', 'wb') as file:
+with open('newSquare.png', 'wb') as file:
     file.write(data)
 
 file.close()
+img = cv2.imread(filename)
+
 
 
