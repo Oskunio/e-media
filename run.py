@@ -1,7 +1,7 @@
 import binascii
 import cv2
 import numpy as np
-
+import functions
 
 filename = "square.png"
 img = cv2.imread(filename)
@@ -55,19 +55,24 @@ print()
 
 
 #print file in ANSI
-file = open('square.png', encoding='ANSI')
-f1 = file.readlines()
-for line in f1:
-    print(line.rstrip())
-file.close()
+file = open(filename, encoding='ANSI')
+
+f2 = file.read()
+print(f2)
+result1 = functions.findChunk2(f2)
+print("Wynik findChunk2:",result1)
+result = functions.findChunk(filename)
+print("Wynik:",result)
+
 print()
 
 #print in hex
 with open(filename, 'rb') as f:
     hexdata = f.read().hex()
+
 print("hexdata length:",len(hexdata))
 print(hexdata)
-hexlist = map(''.join, zip(*[iter(hexdata)]*2)) #do a list of 2 char elements
+hexlist = map(''.join, zip(*[iter(hexdata)]*2)) #do a list of 2 char elements, moze sie przydac
 
-#zrobic funkcje przeszukującą hexdata, ktora znajdzie Ancillary chunks name, a pozniej cofnie o 4 bajty i odczyta wielkosc chunka
-#nastepnie znajac wielkosc chunka zapisze plik bez niego
+file.close()
+
