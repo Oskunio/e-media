@@ -16,3 +16,4 @@ filename2 = './images/newSquare.png'
 # functions.printFileInHex(filename2)
 
 functions.IHDRinterpetation(filename)
+functions.fourierTransform(filename)
