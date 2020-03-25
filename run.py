@@ -1,12 +1,15 @@
 import functions
 
-filename = "./images/square.png"
-filename2 = './images/newSquare.png'
-# functions.displayImage(filename)
-# functions.showImgInfo(filename)
-# functions.pritnFileInAnsi(filename)
-# functions.printFileInHex(filename)
-# print()
+# filename = "./images/square.png"
+filename = "./images/squareWithExif.png"
+# filename2 = './images/newSquare.png'
+# filename = "./images/dog.png"
+# filename2 = './images/newDog.png'
+functions.displayImage(filename)
+functions.showImgInfo(filename)
+functions.pritnFileInAnsi(filename)
+functions.printFileInHex(filename)
+print()
 
 # newFile = functions.findAndRemoveAncillaryChunk(filename)
 
