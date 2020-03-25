@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+
+
 # szukanie chunksow i usuwanie ich
 # funkcja przyjmuje nazwe pliku, a zwraca nowy plik tekstowy (obraz)
-
-
 def fourierTransform(filename):
     img = cv2.imread(filename, 0)
     f = np.fft.fft2(img)
@@ -45,9 +45,8 @@ def findAndRemoveAncillaryChunk(filename):
     handler.close()
     return newTextFile
 
+
 # wyswietla plik w czytelnym dla czlowieka formacie
-
-
 def pritnFileInAnsi(filename):
     file = open(filename, encoding='ANSI')
     f2 = file.read()
@@ -100,6 +99,7 @@ def HexStrigToPNG(filename, newFile):
         file.write(data)
     file.close()
 
+
 # IHDR data: it contains (in this order) the image's width (4 bytes),
 # height (4 bytes),
 # bit depth (1 byte),
@@ -108,54 +108,75 @@ def HexStrigToPNG(filename, newFile):
 # filter method (1 byte),
 # interlace method (1 byte)
 # (13 data bytes total)
-
-
 def IHDRinterpetation(filename):
-
     # open and convert file to hex string
     handler = open(filename, 'rb')
     hexFile = handler.read().hex()
     posInText = hexFile.find("49484452")
 
     if posInText != -1:
-
-        # length = hexFile[(posInText - 8):posInText]
-        # chunkLengthDec = int(length, 16)
-        # realLength = 2 * chunkLengthDec
+        length = hexFile[(posInText - 8):posInText]
+        chunkLengthDec = int(length, 16)
+        realLength = 2 * chunkLengthDec
+        print("Real Length: ", realLength)
 
         width = hexFile[(posInText+8):(posInText+16)]
         widthDec = int(width, 16)
-        print("width:", widthDec)
+        print("Width: ", widthDec)
 
         height = hexFile[(posInText + 16):(posInText + 24)]
         heightDec = int(height, 16)
-        print("height:", heightDec)
+        print("Height: ", heightDec)
 
         # Bit depth is a single-byte integer giving the number of bits
         # per sample or per palette index (not per pixel)
         bitDepth = hexFile[(posInText + 24):(posInText + 26)]
         bitDepthDec = int(bitDepth, 16)
-        print("bit depth:", bitDepthDec)
+        print("Bit depth: ", bitDepthDec)
 
         # color type-img type: 0-grayscale, 2-truecolor, 3-indexed-colour,
         # 4-grayscale with alpha, 6-truecolor with aplha
         color = hexFile[(posInText + 26):(posInText + 28)]
         colorDec = int(color, 16)
-        print("color type:", colorDec)
+        if(colorDec == 0):
+            colorDec = "Grayscale"
+        elif(colorDec == 2):
+            colorDec = "Truecolor"
+        elif(colorDec == 3):
+            colorDec = "Indexed-colour"
+        elif(colorDec == 4):
+            colorDec = "Grayscale with alpha"
+        elif(colorDec == 6):
+            colorDec = "Truecolor with aplha"
+        print("Color type: ", colorDec)
 
         # PNG compression method 0 is deflate/inflate compression
         compression = hexFile[(posInText + 28):(posInText + 30)]
         compressionDec = int(compression, 16)
-        print("compression method:", compressionDec)
+        print("Compression method: ", compressionDec)
 
-        # filter = hexFile[(posInText + 30):(posInText + 32)]
-        filterDec = int(bitDepth, 16)
-        print("filter method:", filterDec)
+        filter = hexFile[(posInText + 30):(posInText + 32)]
+        filterDec = int(filter, 16)
+        if(filterDec == 0):
+            filterDec = "None"
+        elif(filterDec == 1):
+            filterDec = "Sub"
+        elif(filterDec == 2):
+            filterDec = "Up"
+        elif(filterDec == 3):
+            filterDec = "Average"
+        elif(filterDec == 4):
+            filterDec = "Paeth"
+        print("Filter method: ", filterDec)
 
         # 0-the null method, Interlace method 1, known as Adam7
         inter = hexFile[(posInText + 32):(posInText + 34)]
         interDec = int(inter, 16)
-        print("interlace method:", interDec)
+        if(interDec == 0):
+            interDec = "Null method"
+        elif(interDec == 1):
+            interDec = "Interlace method - Adam7"
+        print("Interlace method: ", interDec)
 
     else:
         print("IHDR not found")
