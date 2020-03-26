@@ -138,45 +138,34 @@ def IHDRinterpetation(filename):
         # 4-grayscale with alpha, 6-truecolor with aplha
         color = hexFile[(posInText + 26):(posInText + 28)]
         colorDec = int(color, 16)
-        if(colorDec == 0):
-            colorDec = "Grayscale"
-        elif(colorDec == 2):
-            colorDec = "Truecolor"
-        elif(colorDec == 3):
-            colorDec = "Indexed-colour"
-        elif(colorDec == 4):
-            colorDec = "Grayscale with alpha"
-        elif(colorDec == 6):
-            colorDec = "Truecolor with aplha"
-        print("Color type: ", colorDec)
+        print("Color type: ",
+              {0: "Grayscale",
+               2: "Truecolor",
+               3: "Indexed-colour",
+               4: "Grayscale with alpha",
+               6: "Truecolor with aplha"}.get(colorDec, colorDec))
 
         # PNG compression method 0 is deflate/inflate compression
         compression = hexFile[(posInText + 28):(posInText + 30)]
         compressionDec = int(compression, 16)
-        print("Compression method: ", compressionDec)
+        print("Compression method: ", {
+              0: "Deflate/inflate"}.get(compressionDec, compressionDec))
 
         filter = hexFile[(posInText + 30):(posInText + 32)]
         filterDec = int(filter, 16)
-        if(filterDec == 0):
-            filterDec = "None"
-        elif(filterDec == 1):
-            filterDec = "Sub"
-        elif(filterDec == 2):
-            filterDec = "Up"
-        elif(filterDec == 3):
-            filterDec = "Average"
-        elif(filterDec == 4):
-            filterDec = "Paeth"
-        print("Filter method: ", filterDec)
+        print("Filter method: ", {
+            0: "None",
+            1: "Sub",
+            2: "Up",
+            3: "Average",
+            4: "Paeth"}.get(filterDec, filterDec))
 
         # 0-the null method, Interlace method 1, known as Adam7
         inter = hexFile[(posInText + 32):(posInText + 34)]
         interDec = int(inter, 16)
-        if(interDec == 0):
-            interDec = "Null method"
-        elif(interDec == 1):
-            interDec = "Interlace method - Adam7"
-        print("Interlace method: ", interDec)
+        print("Interlace method: ", {
+              0: "Null method",
+              1: "Interlance method - Adam7"}.get(interDec, interDec))
 
     else:
         print("IHDR not found")
