@@ -3,8 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-# szukanie chunksow i usuwanie ich
-# funkcja przyjmuje nazwe pliku, a zwraca nowy plik tekstowy (obraz)
+
 def fourierTransform(filename):
     img = cv2.imread(filename, 0)
     f = np.fft.fft2(img)
@@ -16,7 +15,8 @@ def fourierTransform(filename):
     plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
     plt.show()
 
-
+# szukanie chunksow i usuwanie ich
+# funkcja przyjmuje nazwe pliku, a zwraca nowy plik tekstowy (obraz)
 def findAndRemoveAncillaryChunk(filename):
     # ancillary chunks in hex code
     chunks = ["624b4744", "6348524d", "64534947", "65584966", "67414d41",
@@ -53,14 +53,14 @@ def pritnFileInAnsi(filename):
     print(f2)
     file.close()
 
-
+# wyswietla plik w kodzie szesnastkowym
 def printFileInHex(filename):
     handler = open(filename, 'rb')
     hexFile = handler.read().hex()
     print(hexFile)
     handler.close()
 
-
+#wyswietla obraz
 def displayImage(filename):
     img = cv2.imread(filename)
     window = "Window"
@@ -93,7 +93,7 @@ def showImgInfo(filename):
     print("size:", size)
 
 
-def HexStrigToPNG(filename, newFile):
+def HexStringToPNG(filename, newFile):
     data = bytes.fromhex(newFile)
     with open(filename, 'wb') as file:
         file.write(data)
@@ -158,14 +158,14 @@ def IHDRinterpetation(filename):
             1: "Sub",
             2: "Up",
             3: "Average",
-            4: "Paeth"}.get(filterDec, filterDec))
+            4: "Path"}.get(filterDec, filterDec))
 
         # 0-the null method, Interlace method 1, known as Adam7
         inter = hexFile[(posInText + 32):(posInText + 34)]
         interDec = int(inter, 16)
         print("Interlace method: ", {
               0: "Null method",
-              1: "Interlance method - Adam7"}.get(interDec, interDec))
+              1: "Interlace method - Adam7"}.get(interDec, interDec))
 
     else:
         print("IHDR not found")

@@ -1,24 +1,22 @@
-# import functions
+import functions
 import getExif
 
-# filename = "./images/square.png"
-filename = "./images/squareWithExif.png"
-# filename2 = './images/newSquare.png'
-# filename = "./images/dog.png"
-# filename2 = './images/newDog.png'
-# functions.displayImage(filename)
-# functions.showImgInfo(filename)
-# functions.pritnFileInAnsi(filename)
-# functions.printFileInHex(filename)
-getExif.getExif(filename)
-# print()
+filename = "./images/square.png"
+filename1 = './images/newSquare.png'
+filename2 = "./images/squareWithExif.png"
 
-# newFile = functions.findAndRemoveAncillaryChunk(filename)
 
-# functions.HexStrigToPNG(filename2, newFile)
-# functions.displayImage(filename2)
-# functions.pritnFileInAnsi(filename2)
-# functions.printFileInHex(filename2)
+functions.displayImage(filename) #wyswietla orginalny obraz
 
-# functions.IHDRinterpetation(filename)
-# functions.fourierTransform(filename)
+newFile = functions.findAndRemoveAncillaryChunk(filename) # usuwa ancillary chunks
+
+functions.HexStringToPNG(filename1, newFile)
+
+functions.displayImage(filename1) #wyswietla obraz po usunieciu metadanych
+print("Interpretacja IHDR:")
+functions.IHDRinterpetation(filename)
+print()
+functions.fourierTransform(filename)
+
+getExif.getExif(filename2)
+
