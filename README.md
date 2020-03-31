@@ -28,7 +28,7 @@ Plik wynikowy: newSquare.png
 ## Działanie
 Na początku zostaje wyświetlony orginalny obraz square.png. Funkcja findAndRemoveAncillaryChunk usuwa ancillary chunks przeszukując szesnastkowy kod pliku. Następnie zostaje wyswietlony obraz wynikowy newSquare.png.
 ## Wnioski
-Rozmiar pliku orginalnego to 269 B, a pliku wynikowego (po usunieciu chunk'ów) 219 B. Poprawność została sprawdzona poprzez uzycie funkcji printFileInHex i programu Hex Editior.
+Rozmiar pliku orginalnego to 269 B, a pliku wynikowego (po usunieciu chunk'ów) 219 B. Poprawność została sprawdzona poprzez uzycie funkcji printFileInHex i programu Hex Editior, a także poprzez wyswietlenie obu plików.
 
 # 3. Interpretacja IHDR
 ## Działanie
