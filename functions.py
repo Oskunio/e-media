@@ -115,11 +115,6 @@ def IHDRinterpetation(filename):
     posInText = hexFile.find("49484452")
 
     if posInText != -1:
-        length = hexFile[(posInText - 8):posInText]
-        chunkLengthDec = int(length, 16)
-        realLength = 2 * chunkLengthDec
-        print("Real Length: ", realLength)
-
         width = hexFile[(posInText+8):(posInText+16)]
         widthDec = int(width, 16)
         print("Width: ", widthDec)
@@ -169,3 +164,108 @@ def IHDRinterpetation(filename):
 
     else:
         print("IHDR not found")
+
+def PLTEread(filename):
+    handler = open(filename, 'rb')
+    hexFile = handler.read().hex()
+    posInText = hexFile.find("504c5445")
+
+    if posInText != -1:
+        length = hexFile[(posInText - 8):posInText]
+        chunkLengthDec = int(length, 16)
+        realLength = 2 * chunkLengthDec
+        posInText += 8
+        i = 0
+        while i < realLength / 3:
+            red = hexFile[posInText:(posInText+2)]
+            redDec = int(red, 16)
+            posInText += 2
+            green = hexFile[posInText:(posInText + 2)]
+            greenDec = int(green, 16)
+            posInText += 2
+            blue = hexFile[posInText:(posInText + 2)]
+            blueDec = int(blue, 16)
+            posInText += 2
+            print("Entry:" + str(i) + " Red:" + str(redDec) + " Green:" + str(greenDec) + " Blue:" + str(blueDec))
+            i += 1
+    else:
+        print("PLTE not found")
+
+# The tIME chunk gives the time of the last image modification (not the time of initial image creation)
+def tIMEread(filename):
+    handler = open(filename, 'rb')
+    hexFile = handler.read().hex()
+    posInText = hexFile.find("74494d45")
+
+    if posInText != -1:
+        posInText += 8  # skip chunk name
+        year = hexFile[posInText:(posInText+4)]
+        yearDec = int(year, 16)
+
+        posInText += 4
+        month = hexFile[posInText:(posInText + 2)]
+        monthDec = int(month, 16)
+
+        posInText += 2
+        day = hexFile[posInText:(posInText + 2)]
+        dayDec = int(day, 16)
+
+        posInText += 2
+        hour = hexFile[posInText:(posInText + 2)]
+        hourDec = int(hour, 16)
+
+        posInText += 2
+        minutes = hexFile[posInText:(posInText + 2)]
+        minutesDec = int(minutes, 16)
+
+        posInText += 2
+        seconds = hexFile[posInText:(posInText + 2)]
+        secondsDec = int(seconds, 16)
+
+        print(str(yearDec) + "-" + str(monthDec) + "-" + str(dayDec))
+        print(str(hourDec) + ":" + str(minutesDec) + ":" + str(secondsDec))
+
+    else:
+        print("tIME not found")
+
+# The pHYs chunk specifies the intended pixel size or aspect ratio for display of the image
+def pHYsRead(filename):
+    handler = open(filename, 'rb')
+    hexFile = handler.read().hex()
+    posInText = hexFile.find("70485973")
+
+    if posInText != -1:
+        posInText += 8  # skip chunk name
+        Xaxis = hexFile[posInText:(posInText + 8)]
+        XaxisDec = int(Xaxis, 16)
+        print("Pixels per unit, X axis:", XaxisDec)
+
+        posInText += 8 #skip X axis
+        Yaxis = hexFile[posInText:(posInText + 8)]
+        YaxisDec = int(Yaxis, 16)
+        print("Pixels per unit, Y axis:", YaxisDec)
+
+        posInText += 8  # skip Yaxis
+        unit = hexFile[posInText:(posInText + 2)]
+        unitDec = int(unit, 16)
+        print("Unit specifier:", unitDec)
+
+        if unitDec == 1:
+            print("unit is the meter")
+        else:
+            print("unit is unknown")
+    else:
+        print("pHYs not found")
+
+
+def IDATread(filename):
+    handler = open(filename, 'rb')
+    hexFile = handler.read().hex()
+    posInText = hexFile.find("49444154")
+
+    if posInText != -1:
+        length = hexFile[(posInText - 8):posInText]
+        chunkLengthDec = int(length, 16)
+        realLength = 2 * chunkLengthDec
+        posInText += 8  # skip name
+        print(hexFile[posInText:(posInText + realLength)])
