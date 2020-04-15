@@ -30,6 +30,18 @@ Na początku zostaje wyświetlony orginalny obraz square.png. Funkcja findAndRem
 ## Wnioski
 Rozmiar pliku orginalnego to 269 B, a pliku wynikowego (po usunieciu chunk'ów) 219 B. Poprawność została sprawdzona poprzez uzycie funkcji printFileInHex i programu Hex Editior, a także poprzez wyswietlenie obu plików.
 
-# 3. Interpretacja IHDR
+# 3. Wyświetlenie IHDR
 ## Działanie
 Funkcja IHDRinterpretation dokonuje analizy IHDR i interpretuje otrzymane dane.
+# 4. Wyswietlanie PLTE
+## Działanie
+Funkcja PLTEread wyświetla palete barw 
+# 5. Wyswietlanie IDAT
+## Działanie
+Funkcja PLTEread wyświetla zawartość IDAT 
+# 6. Wyswietlanie pHYs 
+## Działanie
+Funkcja pHYsRead wyświetla informacje o rozmiarze pixeli
+# 7. Wyswietlanie tIME
+## Działanie
+Funkcja tIMEread wyswietla czas ostatniej modyfikacji
